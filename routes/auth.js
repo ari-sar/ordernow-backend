@@ -21,17 +21,16 @@ router.post("/login", async (req, res) => {
 
     // 2. If user doesn't exist, return error
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(401).json({ error: "Invalid Credentials" });
     }
 
-    // 3. Compare the provided password with the hashed password in DB
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ error: "Invalid password" });
+      return res.status(401).json({ error: "Invalid Credentials" });
     }
 
-    // 4. Success! (You can also generate a JWT token here if needed)
+    // Success! (You can also generate a JWT token here if needed)
     res.json({
       message: "Login successful",
       user: { id: user.id, username: user.username },

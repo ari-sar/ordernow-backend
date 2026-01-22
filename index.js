@@ -6,7 +6,7 @@ const { connectMySQL } = require('./config/db.mysql');
 // Import Routes
 const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/orders');
-const productRoutes = require('./routes/products'); // <--- 1. Import the new file
+const productRoutes = require('./routes/products');
 
 const app = express();
 
@@ -27,5 +27,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/products', productRoutes); // <--- 2. Mount the route here
 
-// Start Server
-app.listen(3000, () => console.log('Server running on port 3000'));
+if (require.main === module) {
+  app.listen(3000, () => console.log('Server running on port 3000'));
+}
+module.exports = app;
